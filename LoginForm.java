@@ -24,7 +24,49 @@ public class LoginForm extends JFrame{
         txtPassword = new JPasswordField();
 
         btnLogin = new JButton("Login");
-       
+
+        
+        //btnLogin Event Handle
+        btnLogin.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event){
+                //validate the form
+                String username = txtUsername.getText().trim();
+                String password = new String (txtPassword.getPassword());
+                // username.equals("")
+                if(!username.isEmpty() || password.isEmpty()){
+                    //error message
+                    JOptionPane.showMessageDialog(
+                        new JFrame(),
+                        "Username and Password is Mandatory",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE
+                    );
+                }else{
+                    // db validate
+                    LoginProcess loginProcess = new LoginProcess();
+                    boolean isLoginSuccess = loginProcess.dologin(
+                                                    username, password
+                                            );
+                    if(isLoginSuccess){
+                        //open the new main form
+
+                    }else{
+                        //show error message
+                        JOptionPane.showMessageDialog(
+                            new JFrame(),
+                                "Invalid USername and/or password",
+                                "ERROR",
+                            JOptionPane.ERROR_MESSAGE   
+                        );
+                    }
+                }
+
+                //if valid : db validate
+                //       if valid : show main form
+                // else show error message and remain opended
+            }
+        });
+
         //assign the controls to frame
         this.add(lblUserNamer);
         this.add(txtUsername);
